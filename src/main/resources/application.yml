@@ -1,0 +1,43 @@
+spring:
+  application:
+    # Name of the application
+    name: library
+
+  jpa:
+    hibernate:
+      # We rely on liquibase to create the schema.
+      ddl-auto: none
+
+  datasource:
+    # Datasource configuration
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/library
+    username: postgres
+    password: password
+
+  liquibase:
+    # Liquibase configuration
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+management:
+  # Define the endpoints that should be exposed
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus", "health", "info", "loggers" ]
+  # Configure default endpoints behavior
+  endpoint:
+    health:
+      show-details: when_authorized
+  # Add custom tags to the metrics to allow filtering for microservices
+  metrics:
+    tags:
+      service: ${spring.application.name}
+
+# Custom configurations
+app:
+  # JWT configuration
+  jwt:
+    secret: CgrFODdnAwpP1k1AvXR9I+8bwzsrlfLJi0ERyRr5Dxj5B8pDhZGO6edl2n0Zvl1Ryhti7mGinAnRWqUSRZQaPcrOwcLYauLbTOX9n3YKQ4qYCxROOsY6igHOMBXYCoQsANjZ+Vl8Sj2SOlNME7LY1PmIGSC8VByeiKvJdPh4by/QSCtf7rfkaqhicEIdU66vYa6W61I/797sPjxK0P20jT801B/VsREEeJDL71OUygwSo8T4dbzb5sIRoqr2BzKUAE2FsYMl6ghkZPx+bnuGUMNIjbhLXuLsOf1CkhWWj0DHPMyIhB0NAziFpp8FtF4fpo2h9txj+MDQXeq3Dj8gMA==
+    expiration: 3600000 # 1 hour in milliseconds
