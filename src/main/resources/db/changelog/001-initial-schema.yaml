@@ -1,0 +1,293 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1728406353765-1
+      author: Paolo
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: publication_date
+                  type: date
+              - column:
+                  name: created_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: books_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: last_modified_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: author
+                  type: VARCHAR(255)
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: isbn
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: genre
+                  type: VARCHAR(255)
+            tableName: books
+  - changeSet:
+      id: 1728406353765-2
+      author: Paolo
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: created_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: locations_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: last_modified_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: address
+                  type: VARCHAR(255)
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: manager_id
+                  type: BIGINT
+            tableName: locations
+  - changeSet:
+      id: 1728406353765-3
+      author: Paolo
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: created_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: users_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: last_modified_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(255)
+            tableName: users
+  - changeSet:
+      id: 1728406353765-4
+      author: Paolo
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: title
+            indexName: idx_book_title
+            tableName: books
+  - changeSet:
+      id: 1728406353765-5
+      author: Paolo
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: author
+              - column:
+                  name: title
+            indexName: idx_book_author_title
+            tableName: books
+  - changeSet:
+      id: 1728406353765-6
+      author: Paolo
+      changes:
+        - addUniqueConstraint:
+            columnNames: isbn
+            constraintName: books_isbn_key
+            tableName: books
+  - changeSet:
+      id: 1728406353765-7
+      author: Paolo
+      changes:
+        - addUniqueConstraint:
+            columnNames: name
+            constraintName: locations_name_key
+            tableName: locations
+  - changeSet:
+      id: 1728406353765-8
+      author: Paolo
+      changes:
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: uk6dotkott2kjsp8vw4d0m25fb7
+            tableName: users
+  - changeSet:
+      id: 1728406353765-9
+      author: Paolo
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: users_username_key
+            tableName: users
+  - changeSet:
+      id: 1728406353765-10
+      author: Paolo
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: quantity
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: book_copies_pkey
+                  name: book_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: book_copies_pkey
+                  name: location_id
+                  type: BIGINT
+            tableName: book_copies
+  - changeSet:
+      id: 1728406353765-11
+      author: Paolo
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+            tableName: user_roles
+  - changeSet:
+      id: 1728406353765-12
+      author: Paolo
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: location_id
+            baseTableName: book_copies
+            constraintName: fk8ch9y9qpa7i6wm21p02jifq2s
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: locations
+            validate: true
+  - changeSet:
+      id: 1728406353765-13
+      author: Paolo
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_roles
+            constraintName: fkhfh9dx7w3ubf1co1vdev94g3f
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+  - changeSet:
+      id: 1728406353765-14
+      author: Paolo
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: book_id
+            baseTableName: book_copies
+            constraintName: fkhlawea8y2e2dv0ta58vc6f5nr
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: books
+            validate: true
+  - changeSet:
+      id: 1728406353765-15
+      author: Paolo
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: manager_id
+            baseTableName: locations
+            constraintName: fkklmlfhdiep7vfirsq48xswx0w
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: users
+            validate: true
+
